@@ -1,0 +1,50 @@
+<ng-container *ngIf="shouldRun">
+  <mat-toolbar class="example-header">Header</mat-toolbar>
+
+  <mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="side" opened class="example-sidenav"
+                 fixedInViewport='Fixed' fixedTopGap="0"
+                 fixedBottomGap="0">
+                 
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+  <!-- This is the tree node template for leaf nodes -->
+  <!-- There is inline padding applied to this node using styles.
+    This padding value depends on the mat-icon-button width. -->
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+      {{node.name}}
+  </mat-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+      <div class="mat-tree-node">
+        <button mat-icon-button matTreeNodeToggle
+                [attr.aria-label]="'Toggle ' + node.name">
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          </mat-icon>
+        </button>
+        {{node.name}}
+      </div>
+      <!-- There is inline padding applied to this div using styles.
+          This padding value depends on the mat-icon-button width.  -->
+      <div [class.example-tree-invisible]="!treeControl.isExpanded(node)"
+          role="group">
+        <ng-container matTreeNodeOutlet></ng-container>
+    </div>
+  </mat-nested-tree-node>
+</mat-tree>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      
+      <p class="slideBtn"><button mat-mini-fab (click)="sidenav.toggle()"><mat-icon>{{sidenav.opened ? 'arrow_backward' : 'arrow_forward'}}</mat-icon></button></p>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <mat-toolbar class="example-footer"><h4>&#169;Tata Consultancy Services@2023</h4></mat-toolbar>
+</ng-container>
+
+
+
+<!-- Copyright 2023 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at https://angular.io/license -->
